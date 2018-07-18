@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="zhenghang.dao.RoomMapper" >
+  <resultMap id="BaseResultMap" type="zhenghang.pojo.Room" >
+    <id column="ROOM_ID" property="roomId" jdbcType="INTEGER" />
+    <result column="BUIL_ID" property="builId" jdbcType="INTEGER" />
+    <result column="ROOM_UNIT" property="roomUnit" jdbcType="INTEGER" />
+    <result column="ROOM_FLOOR" property="roomFloor" jdbcType="INTEGER" />
+    <result column="ROOM_NO" property="roomNo" jdbcType="CHAR" />
+    <result column="ROOM_CLASS" property="roomClass" jdbcType="CHAR" />
+    <result column="ROOM_SUBCLASS" property="roomSubclass" jdbcType="CHAR" />
+    <result column="COUNT_INSPECT" property="countInspect" jdbcType="INTEGER" />
+    <result column="TIME_LASTINSPECT" property="timeLastinspect" jdbcType="TIMESTAMP" />
+    <result column="REC_LASTINSPECT" property="recLastinspect" jdbcType="VARCHAR" />
+    <result column="IS_FOCUS" property="isFocus" jdbcType="BIT" />
+    <result column="IS_DELETED" property="isDeleted" jdbcType="BIT" />
+    <result column="IS_DRUG" property="isDrug" jdbcType="BIT" />
+    <result column="RAMARK" property="ramark" jdbcType="VARCHAR" />
+    <result column="IS_BOOM" property="isBoom" jdbcType="BIT" />
+    <result column="IS_TOXIC" property="isToxic" jdbcType="BIT" />
+    <result column="IS_DANGER" property="isDanger" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ROOM_ID, BUIL_ID, ROOM_UNIT, ROOM_FLOOR, ROOM_NO, ROOM_CLASS, ROOM_SUBCLASS, COUNT_INSPECT, 
+    TIME_LASTINSPECT, REC_LASTINSPECT, IS_FOCUS, IS_DELETED, IS_DRUG, RAMARK, IS_BOOM, 
+    IS_TOXIC, IS_DANGER
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="zhenghang.pojo.RoomExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from room
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from room
+    where ROOM_ID = #{roomId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from room
+    where ROOM_ID = #{roomId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="zhenghang.pojo.RoomExample" >
+    delete from room
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="zhenghang.pojo.Room" >
+    insert into room (ROOM_ID, BUIL_ID, ROOM_UNIT, 
+      ROOM_FLOOR, ROOM_NO, ROOM_CLASS, 
+      ROOM_SUBCLASS, COUNT_INSPECT, TIME_LASTINSPECT, 
+      REC_LASTINSPECT, IS_FOCUS, IS_DELETED, 
+      IS_DRUG, RAMARK, IS_BOOM, IS_TOXIC, 
+      IS_DANGER)
+    values (#{roomId,jdbcType=INTEGER}, #{builId,jdbcType=INTEGER}, #{roomUnit,jdbcType=INTEGER}, 
+      #{roomFloor,jdbcType=INTEGER}, #{roomNo,jdbcType=CHAR}, #{roomClass,jdbcType=CHAR}, 
+      #{roomSubclass,jdbcType=CHAR}, #{countInspect,jdbcType=INTEGER}, #{timeLastinspect,jdbcType=TIMESTAMP}, 
+      #{recLastinspect,jdbcType=VARCHAR}, #{isFocus,jdbcType=BIT}, #{isDeleted,jdbcType=BIT}, 
+      #{isDrug,jdbcType=BIT}, #{ramark,jdbcType=VARCHAR}, #{isBoom,jdbcType=BIT}, #{isToxic,jdbcType=BIT}, 
+      #{isDanger,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="zhenghang.pojo.Room" >
+    insert into room
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="roomId != null" >
+        ROOM_ID,
+      </if>
+      <if test="builId != null" >
+        BUIL_ID,
+      </if>
+      <if test="roomUnit != null" >
+        ROOM_UNIT,
+      </if>
+      <if test="roomFloor != null" >
+        ROOM_FLOOR,
+      </if>
+      <if test="roomNo != null" >
+        ROOM_NO,
+      </if>
+      <if test="roomClass != null" >
+        ROOM_CLASS,
+      </if>
+      <if test="roomSubclass != null" >
+        ROOM_SUBCLASS,
+      </if>
+      <if test="countInspect != null" >
+        COUNT_INSPECT,
+      </if>
+      <if test="timeLastinspect != null" >
+        TIME_LASTINSPECT,
+      </if>
+      <if test="recLastinspect != null" >
+        REC_LASTINSPECT,
+      </if>
+      <if test="isFocus != null" >
+        IS_FOCUS,
+      </if>
+      <if test="isDeleted != null" >
+        IS_DELETED,
+      </if>
+      <if test="isDrug != null" >
+        IS_DRUG,
+      </if>
+      <if test="ramark != null" >
+        RAMARK,
+      </if>
+      <if test="isBoom != null" >
+        IS_BOOM,
+      </if>
+      <if test="isToxic != null" >
+        IS_TOXIC,
+      </if>
+      <if test="isDanger != null" >
+        IS_DANGER,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="roomId != null" >
+        #{roomId,jdbcType=INTEGER},
+      </if>
+      <if test="builId != null" >
+        #{builId,jdbcType=INTEGER},
+      </if>
+      <if test="roomUnit != null" >
+        #{roomUnit,jdbcType=INTEGER},
+      </if>
+      <if test="roomFloor != null" >
+        #{roomFloor,jdbcType=INTEGER},
+      </if>
+      <if test="roomNo != null" >
+        #{roomNo,jdbcType=CHAR},
+      </if>
+      <if test="roomClass != null" >
+        #{roomClass,jdbcType=CHAR},
+      </if>
+      <if test="roomSubclass != null" >
+        #{roomSubclass,jdbcType=CHAR},
+      </if>
+      <if test="countInspect != null" >
+        #{countInspect,jdbcType=INTEGER},
+      </if>
+      <if test="timeLastinspect != null" >
+        #{timeLastinspect,jdbcType=TIMESTAMP},
+      </if>
+      <if test="recLastinspect != null" >
+        #{recLastinspect,jdbcType=VARCHAR},
+      </if>
+      <if test="isFocus != null" >
+        #{isFocus,jdbcType=BIT},
+      </if>
+      <if test="isDeleted != null" >
+        #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="isDrug != null" >
+        #{isDrug,jdbcType=BIT},
+      </if>
+      <if test="ramark != null" >
+        #{ramark,jdbcType=VARCHAR},
+      </if>
+      <if test="isBoom != null" >
+        #{isBoom,jdbcType=BIT},
+      </if>
+      <if test="isToxic != null" >
+        #{isToxic,jdbcType=BIT},
+      </if>
+      <if test="isDanger != null" >
+        #{isDanger,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="zhenghang.pojo.RoomExample" resultType="java.lang.Integer" >
+    select count(*) from room
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update room
+    <set >
+      <if test="record.roomId != null" >
+        ROOM_ID = #{record.roomId,jdbcType=INTEGER},
+      </if>
+      <if test="record.builId != null" >
+        BUIL_ID = #{record.builId,jdbcType=INTEGER},
+      </if>
+      <if test="record.roomUnit != null" >
+        ROOM_UNIT = #{record.roomUnit,jdbcType=INTEGER},
+      </if>
+      <if test="record.roomFloor != null" >
+        ROOM_FLOOR = #{record.roomFloor,jdbcType=INTEGER},
+      </if>
+      <if test="record.roomNo != null" >
+        ROOM_NO = #{record.roomNo,jdbcType=CHAR},
+      </if>
+      <if test="record.roomClass != null" >
+        ROOM_CLASS = #{record.roomClass,jdbcType=CHAR},
+      </if>
+      <if test="record.roomSubclass != null" >
+        ROOM_SUBCLASS = #{record.roomSubclass,jdbcType=CHAR},
+      </if>
+      <if test="record.countInspect != null" >
+        COUNT_INSPECT = #{record.countInspect,jdbcType=INTEGER},
+      </if>
+      <if test="record.timeLastinspect != null" >
+        TIME_LASTINSPECT = #{record.timeLastinspect,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.recLastinspect != null" >
+        REC_LASTINSPECT = #{record.recLastinspect,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isFocus != null" >
+        IS_FOCUS = #{record.isFocus,jdbcType=BIT},
+      </if>
+      <if test="record.isDeleted != null" >
+        IS_DELETED = #{record.isDeleted,jdbcType=BIT},
+      </if>
+      <if test="record.isDrug != null" >
+        IS_DRUG = #{record.isDrug,jdbcType=BIT},
+      </if>
+      <if test="record.ramark != null" >
+        RAMARK = #{record.ramark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isBoom != null" >
+        IS_BOOM = #{record.isBoom,jdbcType=BIT},
+      </if>
+      <if test="record.isToxic != null" >
+        IS_TOXIC = #{record.isToxic,jdbcType=BIT},
+      </if>
+      <if test="record.isDanger != null" >
+        IS_DANGER = #{record.isDanger,jdbcType=BIT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update room
+    set ROOM_ID = #{record.roomId,jdbcType=INTEGER},
+      BUIL_ID = #{record.builId,jdbcType=INTEGER},
+      ROOM_UNIT = #{record.roomUnit,jdbcType=INTEGER},
+      ROOM_FLOOR = #{record.roomFloor,jdbcType=INTEGER},
+      ROOM_NO = #{record.roomNo,jdbcType=CHAR},
+      ROOM_CLASS = #{record.roomClass,jdbcType=CHAR},
+      ROOM_SUBCLASS = #{record.roomSubclass,jdbcType=CHAR},
+      COUNT_INSPECT = #{record.countInspect,jdbcType=INTEGER},
+      TIME_LASTINSPECT = #{record.timeLastinspect,jdbcType=TIMESTAMP},
+      REC_LASTINSPECT = #{record.recLastinspect,jdbcType=VARCHAR},
+      IS_FOCUS = #{record.isFocus,jdbcType=BIT},
+      IS_DELETED = #{record.isDeleted,jdbcType=BIT},
+      IS_DRUG = #{record.isDrug,jdbcType=BIT},
+      RAMARK = #{record.ramark,jdbcType=VARCHAR},
+      IS_BOOM = #{record.isBoom,jdbcType=BIT},
+      IS_TOXIC = #{record.isToxic,jdbcType=BIT},
+      IS_DANGER = #{record.isDanger,jdbcType=BIT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="zhenghang.pojo.Room" >
+    update room
+    <set >
+      <if test="builId != null" >
+        BUIL_ID = #{builId,jdbcType=INTEGER},
+      </if>
+      <if test="roomUnit != null" >
+        ROOM_UNIT = #{roomUnit,jdbcType=INTEGER},
+      </if>
+      <if test="roomFloor != null" >
+        ROOM_FLOOR = #{roomFloor,jdbcType=INTEGER},
+      </if>
+      <if test="roomNo != null" >
+        ROOM_NO = #{roomNo,jdbcType=CHAR},
+      </if>
+      <if test="roomClass != null" >
+        ROOM_CLASS = #{roomClass,jdbcType=CHAR},
+      </if>
+      <if test="roomSubclass != null" >
+        ROOM_SUBCLASS = #{roomSubclass,jdbcType=CHAR},
+      </if>
+      <if test="countInspect != null" >
+        COUNT_INSPECT = #{countInspect,jdbcType=INTEGER},
+      </if>
+      <if test="timeLastinspect != null" >
+        TIME_LASTINSPECT = #{timeLastinspect,jdbcType=TIMESTAMP},
+      </if>
+      <if test="recLastinspect != null" >
+        REC_LASTINSPECT = #{recLastinspect,jdbcType=VARCHAR},
+      </if>
+      <if test="isFocus != null" >
+        IS_FOCUS = #{isFocus,jdbcType=BIT},
+      </if>
+      <if test="isDeleted != null" >
+        IS_DELETED = #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="isDrug != null" >
+        IS_DRUG = #{isDrug,jdbcType=BIT},
+      </if>
+      <if test="ramark != null" >
+        RAMARK = #{ramark,jdbcType=VARCHAR},
+      </if>
+      <if test="isBoom != null" >
+        IS_BOOM = #{isBoom,jdbcType=BIT},
+      </if>
+      <if test="isToxic != null" >
+        IS_TOXIC = #{isToxic,jdbcType=BIT},
+      </if>
+      <if test="isDanger != null" >
+        IS_DANGER = #{isDanger,jdbcType=BIT},
+      </if>
+    </set>
+    where ROOM_ID = #{roomId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="zhenghang.pojo.Room" >
+    update room
+    set BUIL_ID = #{builId,jdbcType=INTEGER},
+      ROOM_UNIT = #{roomUnit,jdbcType=INTEGER},
+      ROOM_FLOOR = #{roomFloor,jdbcType=INTEGER},
+      ROOM_NO = #{roomNo,jdbcType=CHAR},
+      ROOM_CLASS = #{roomClass,jdbcType=CHAR},
+      ROOM_SUBCLASS = #{roomSubclass,jdbcType=CHAR},
+      COUNT_INSPECT = #{countInspect,jdbcType=INTEGER},
+      TIME_LASTINSPECT = #{timeLastinspect,jdbcType=TIMESTAMP},
+      REC_LASTINSPECT = #{recLastinspect,jdbcType=VARCHAR},
+      IS_FOCUS = #{isFocus,jdbcType=BIT},
+      IS_DELETED = #{isDeleted,jdbcType=BIT},
+      IS_DRUG = #{isDrug,jdbcType=BIT},
+      RAMARK = #{ramark,jdbcType=VARCHAR},
+      IS_BOOM = #{isBoom,jdbcType=BIT},
+      IS_TOXIC = #{isToxic,jdbcType=BIT},
+      IS_DANGER = #{isDanger,jdbcType=BIT}
+    where ROOM_ID = #{roomId,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="zhenghang.dao.PersonMapper" >
+  <resultMap id="BaseResultMap" type="zhenghang.pojo.Person" >
+    <id column="PERS_ID" property="persId" jdbcType="INTEGER" />
+    <result column="ROOM_ID" property="roomId" jdbcType="INTEGER" />
+    <result column="PERS_NAME" property="persName" jdbcType="VARCHAR" />
+    <result column="PERS_SEX" property="persSex" jdbcType="BIT" />
+    <result column="PERS_IDCARD" property="persIdcard" jdbcType="VARCHAR" />
+    <result column="PERS_PHONE" property="persPhone" jdbcType="VARCHAR" />
+    <result column="TIME_REGISTER" property="timeRegister" jdbcType="TIMESTAMP" />
+    <result column="WHY_REGISTER" property="whyRegister" jdbcType="CHAR" />
+    <result column="ADDR_CENSUS" property="addrCensus" jdbcType="VARCHAR" />
+    <result column="ADDR_LIVE" property="addrLive" jdbcType="VARCHAR" />
+    <result column="ADDR_WORK" property="addrWork" jdbcType="VARCHAR" />
+    <result column="IS_FOCUS" property="isFocus" jdbcType="BIT" />
+    <result column="IS_DELETED" property="isDeleted" jdbcType="BIT" />
+    <result column="RAMARK" property="ramark" jdbcType="VARCHAR" />
+    <result column="PERS_TYPE" property="persType" jdbcType="INTEGER" />
+    <result column="PERS_PHOTO" property="persPhoto" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    PERS_ID, ROOM_ID, PERS_NAME, PERS_SEX, PERS_IDCARD, PERS_PHONE, TIME_REGISTER, WHY_REGISTER, 
+    ADDR_CENSUS, ADDR_LIVE, ADDR_WORK, IS_FOCUS, IS_DELETED, RAMARK, PERS_TYPE, PERS_PHOTO
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="zhenghang.pojo.PersonExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from person
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from person
+    where PERS_ID = #{persId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from person
+    where PERS_ID = #{persId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="zhenghang.pojo.PersonExample" >
+    delete from person
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="zhenghang.pojo.Person" >
+    insert into person (PERS_ID, ROOM_ID, PERS_NAME, 
+      PERS_SEX, PERS_IDCARD, PERS_PHONE, 
+      TIME_REGISTER, WHY_REGISTER, ADDR_CENSUS, 
+      ADDR_LIVE, ADDR_WORK, IS_FOCUS, 
+      IS_DELETED, RAMARK, PERS_TYPE, 
+      PERS_PHOTO)
+    values (#{persId,jdbcType=INTEGER}, #{roomId,jdbcType=INTEGER}, #{persName,jdbcType=VARCHAR}, 
+      #{persSex,jdbcType=BIT}, #{persIdcard,jdbcType=VARCHAR}, #{persPhone,jdbcType=VARCHAR}, 
+      #{timeRegister,jdbcType=TIMESTAMP}, #{whyRegister,jdbcType=CHAR}, #{addrCensus,jdbcType=VARCHAR}, 
+      #{addrLive,jdbcType=VARCHAR}, #{addrWork,jdbcType=VARCHAR}, #{isFocus,jdbcType=BIT}, 
+      #{isDeleted,jdbcType=BIT}, #{ramark,jdbcType=VARCHAR}, #{persType,jdbcType=INTEGER}, 
+      #{persPhoto,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="zhenghang.pojo.Person" >
+    insert into person
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="persId != null" >
+        PERS_ID,
+      </if>
+      <if test="roomId != null" >
+        ROOM_ID,
+      </if>
+      <if test="persName != null" >
+        PERS_NAME,
+      </if>
+      <if test="persSex != null" >
+        PERS_SEX,
+      </if>
+      <if test="persIdcard != null" >
+        PERS_IDCARD,
+      </if>
+      <if test="persPhone != null" >
+        PERS_PHONE,
+      </if>
+      <if test="timeRegister != null" >
+        TIME_REGISTER,
+      </if>
+      <if test="whyRegister != null" >
+        WHY_REGISTER,
+      </if>
+      <if test="addrCensus != null" >
+        ADDR_CENSUS,
+      </if>
+      <if test="addrLive != null" >
+        ADDR_LIVE,
+      </if>
+      <if test="addrWork != null" >
+        ADDR_WORK,
+      </if>
+      <if test="isFocus != null" >
+        IS_FOCUS,
+      </if>
+      <if test="isDeleted != null" >
+        IS_DELETED,
+      </if>
+      <if test="ramark != null" >
+        RAMARK,
+      </if>
+      <if test="persType != null" >
+        PERS_TYPE,
+      </if>
+      <if test="persPhoto != null" >
+        PERS_PHOTO,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="persId != null" >
+        #{persId,jdbcType=INTEGER},
+      </if>
+      <if test="roomId != null" >
+        #{roomId,jdbcType=INTEGER},
+      </if>
+      <if test="persName != null" >
+        #{persName,jdbcType=VARCHAR},
+      </if>
+      <if test="persSex != null" >
+        #{persSex,jdbcType=BIT},
+      </if>
+      <if test="persIdcard != null" >
+        #{persIdcard,jdbcType=VARCHAR},
+      </if>
+      <if test="persPhone != null" >
+        #{persPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="timeRegister != null" >
+        #{timeRegister,jdbcType=TIMESTAMP},
+      </if>
+      <if test="whyRegister != null" >
+        #{whyRegister,jdbcType=CHAR},
+      </if>
+      <if test="addrCensus != null" >
+        #{addrCensus,jdbcType=VARCHAR},
+      </if>
+      <if test="addrLive != null" >
+        #{addrLive,jdbcType=VARCHAR},
+      </if>
+      <if test="addrWork != null" >
+        #{addrWork,jdbcType=VARCHAR},
+      </if>
+      <if test="isFocus != null" >
+        #{isFocus,jdbcType=BIT},
+      </if>
+      <if test="isDeleted != null" >
+        #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="ramark != null" >
+        #{ramark,jdbcType=VARCHAR},
+      </if>
+      <if test="persType != null" >
+        #{persType,jdbcType=INTEGER},
+      </if>
+      <if test="persPhoto != null" >
+        #{persPhoto,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="zhenghang.pojo.PersonExample" resultType="java.lang.Integer" >
+    select count(*) from person
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update person
+    <set >
+      <if test="record.persId != null" >
+        PERS_ID = #{record.persId,jdbcType=INTEGER},
+      </if>
+      <if test="record.roomId != null" >
+        ROOM_ID = #{record.roomId,jdbcType=INTEGER},
+      </if>
+      <if test="record.persName != null" >
+        PERS_NAME = #{record.persName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.persSex != null" >
+        PERS_SEX = #{record.persSex,jdbcType=BIT},
+      </if>
+      <if test="record.persIdcard != null" >
+        PERS_IDCARD = #{record.persIdcard,jdbcType=VARCHAR},
+      </if>
+      <if test="record.persPhone != null" >
+        PERS_PHONE = #{record.persPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.timeRegister != null" >
+        TIME_REGISTER = #{record.timeRegister,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.whyRegister != null" >
+        WHY_REGISTER = #{record.whyRegister,jdbcType=CHAR},
+      </if>
+      <if test="record.addrCensus != null" >
+        ADDR_CENSUS = #{record.addrCensus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addrLive != null" >
+        ADDR_LIVE = #{record.addrLive,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addrWork != null" >
+        ADDR_WORK = #{record.addrWork,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isFocus != null" >
+        IS_FOCUS = #{record.isFocus,jdbcType=BIT},
+      </if>
+      <if test="record.isDeleted != null" >
+        IS_DELETED = #{record.isDeleted,jdbcType=BIT},
+      </if>
+      <if test="record.ramark != null" >
+        RAMARK = #{record.ramark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.persType != null" >
+        PERS_TYPE = #{record.persType,jdbcType=INTEGER},
+      </if>
+      <if test="record.persPhoto != null" >
+        PERS_PHOTO = #{record.persPhoto,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update person
+    set PERS_ID = #{record.persId,jdbcType=INTEGER},
+      ROOM_ID = #{record.roomId,jdbcType=INTEGER},
+      PERS_NAME = #{record.persName,jdbcType=VARCHAR},
+      PERS_SEX = #{record.persSex,jdbcType=BIT},
+      PERS_IDCARD = #{record.persIdcard,jdbcType=VARCHAR},
+      PERS_PHONE = #{record.persPhone,jdbcType=VARCHAR},
+      TIME_REGISTER = #{record.timeRegister,jdbcType=TIMESTAMP},
+      WHY_REGISTER = #{record.whyRegister,jdbcType=CHAR},
+      ADDR_CENSUS = #{record.addrCensus,jdbcType=VARCHAR},
+      ADDR_LIVE = #{record.addrLive,jdbcType=VARCHAR},
+      ADDR_WORK = #{record.addrWork,jdbcType=VARCHAR},
+      IS_FOCUS = #{record.isFocus,jdbcType=BIT},
+      IS_DELETED = #{record.isDeleted,jdbcType=BIT},
+      RAMARK = #{record.ramark,jdbcType=VARCHAR},
+      PERS_TYPE = #{record.persType,jdbcType=INTEGER},
+      PERS_PHOTO = #{record.persPhoto,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="zhenghang.pojo.Person" >
+    update person
+    <set >
+      <if test="roomId != null" >
+        ROOM_ID = #{roomId,jdbcType=INTEGER},
+      </if>
+      <if test="persName != null" >
+        PERS_NAME = #{persName,jdbcType=VARCHAR},
+      </if>
+      <if test="persSex != null" >
+        PERS_SEX = #{persSex,jdbcType=BIT},
+      </if>
+      <if test="persIdcard != null" >
+        PERS_IDCARD = #{persIdcard,jdbcType=VARCHAR},
+      </if>
+      <if test="persPhone != null" >
+        PERS_PHONE = #{persPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="timeRegister != null" >
+        TIME_REGISTER = #{timeRegister,jdbcType=TIMESTAMP},
+      </if>
+      <if test="whyRegister != null" >
+        WHY_REGISTER = #{whyRegister,jdbcType=CHAR},
+      </if>
+      <if test="addrCensus != null" >
+        ADDR_CENSUS = #{addrCensus,jdbcType=VARCHAR},
+      </if>
+      <if test="addrLive != null" >
+        ADDR_LIVE = #{addrLive,jdbcType=VARCHAR},
+      </if>
+      <if test="addrWork != null" >
+        ADDR_WORK = #{addrWork,jdbcType=VARCHAR},
+      </if>
+      <if test="isFocus != null" >
+        IS_FOCUS = #{isFocus,jdbcType=BIT},
+      </if>
+      <if test="isDeleted != null" >
+        IS_DELETED = #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="ramark != null" >
+        RAMARK = #{ramark,jdbcType=VARCHAR},
+      </if>
+      <if test="persType != null" >
+        PERS_TYPE = #{persType,jdbcType=INTEGER},
+      </if>
+      <if test="persPhoto != null" >
+        PERS_PHOTO = #{persPhoto,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where PERS_ID = #{persId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="zhenghang.pojo.Person" >
+    update person
+    set ROOM_ID = #{roomId,jdbcType=INTEGER},
+      PERS_NAME = #{persName,jdbcType=VARCHAR},
+      PERS_SEX = #{persSex,jdbcType=BIT},
+      PERS_IDCARD = #{persIdcard,jdbcType=VARCHAR},
+      PERS_PHONE = #{persPhone,jdbcType=VARCHAR},
+      TIME_REGISTER = #{timeRegister,jdbcType=TIMESTAMP},
+      WHY_REGISTER = #{whyRegister,jdbcType=CHAR},
+      ADDR_CENSUS = #{addrCensus,jdbcType=VARCHAR},
+      ADDR_LIVE = #{addrLive,jdbcType=VARCHAR},
+      ADDR_WORK = #{addrWork,jdbcType=VARCHAR},
+      IS_FOCUS = #{isFocus,jdbcType=BIT},
+      IS_DELETED = #{isDeleted,jdbcType=BIT},
+      RAMARK = #{ramark,jdbcType=VARCHAR},
+      PERS_TYPE = #{persType,jdbcType=INTEGER},
+      PERS_PHOTO = #{persPhoto,jdbcType=VARCHAR}
+    where PERS_ID = #{persId,jdbcType=INTEGER}
+  </update>
+</mapper>

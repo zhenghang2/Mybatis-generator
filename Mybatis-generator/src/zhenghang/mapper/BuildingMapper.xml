@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="zhenghang.dao.BuildingMapper" >
+  <resultMap id="BaseResultMap" type="zhenghang.pojo.Building" >
+    <id column="BUIL_ID" property="builId" jdbcType="INTEGER" />
+    <result column="COMM_ID" property="commId" jdbcType="INTEGER" />
+    <result column="POLI_ID" property="poliId" jdbcType="INTEGER" />
+    <result column="BUIL_NAME" property="builName" jdbcType="VARCHAR" />
+    <result column="BUIL_GPSE" property="builGpse" jdbcType="VARCHAR" />
+    <result column="BUIL_GPSN" property="builGpsn" jdbcType="VARCHAR" />
+    <result column="BUIL_TYPE" property="builType" jdbcType="CHAR" />
+    <result column="IS_DELETED" property="isDeleted" jdbcType="BIT" />
+    <result column="RAMARK" property="ramark" jdbcType="VARCHAR" />
+    <result column="BUIL_ADDR" property="builAddr" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    BUIL_ID, COMM_ID, POLI_ID, BUIL_NAME, BUIL_GPSE, BUIL_GPSN, BUIL_TYPE, IS_DELETED, 
+    RAMARK, BUIL_ADDR
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="zhenghang.pojo.BuildingExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from building
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from building
+    where BUIL_ID = #{builId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from building
+    where BUIL_ID = #{builId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="zhenghang.pojo.BuildingExample" >
+    delete from building
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="zhenghang.pojo.Building" >
+    insert into building (BUIL_ID, COMM_ID, POLI_ID, 
+      BUIL_NAME, BUIL_GPSE, BUIL_GPSN, 
+      BUIL_TYPE, IS_DELETED, RAMARK, 
+      BUIL_ADDR)
+    values (#{builId,jdbcType=INTEGER}, #{commId,jdbcType=INTEGER}, #{poliId,jdbcType=INTEGER}, 
+      #{builName,jdbcType=VARCHAR}, #{builGpse,jdbcType=VARCHAR}, #{builGpsn,jdbcType=VARCHAR}, 
+      #{builType,jdbcType=CHAR}, #{isDeleted,jdbcType=BIT}, #{ramark,jdbcType=VARCHAR}, 
+      #{builAddr,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="zhenghang.pojo.Building" >
+    insert into building
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="builId != null" >
+        BUIL_ID,
+      </if>
+      <if test="commId != null" >
+        COMM_ID,
+      </if>
+      <if test="poliId != null" >
+        POLI_ID,
+      </if>
+      <if test="builName != null" >
+        BUIL_NAME,
+      </if>
+      <if test="builGpse != null" >
+        BUIL_GPSE,
+      </if>
+      <if test="builGpsn != null" >
+        BUIL_GPSN,
+      </if>
+      <if test="builType != null" >
+        BUIL_TYPE,
+      </if>
+      <if test="isDeleted != null" >
+        IS_DELETED,
+      </if>
+      <if test="ramark != null" >
+        RAMARK,
+      </if>
+      <if test="builAddr != null" >
+        BUIL_ADDR,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="builId != null" >
+        #{builId,jdbcType=INTEGER},
+      </if>
+      <if test="commId != null" >
+        #{commId,jdbcType=INTEGER},
+      </if>
+      <if test="poliId != null" >
+        #{poliId,jdbcType=INTEGER},
+      </if>
+      <if test="builName != null" >
+        #{builName,jdbcType=VARCHAR},
+      </if>
+      <if test="builGpse != null" >
+        #{builGpse,jdbcType=VARCHAR},
+      </if>
+      <if test="builGpsn != null" >
+        #{builGpsn,jdbcType=VARCHAR},
+      </if>
+      <if test="builType != null" >
+        #{builType,jdbcType=CHAR},
+      </if>
+      <if test="isDeleted != null" >
+        #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="ramark != null" >
+        #{ramark,jdbcType=VARCHAR},
+      </if>
+      <if test="builAddr != null" >
+        #{builAddr,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="zhenghang.pojo.BuildingExample" resultType="java.lang.Integer" >
+    select count(*) from building
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update building
+    <set >
+      <if test="record.builId != null" >
+        BUIL_ID = #{record.builId,jdbcType=INTEGER},
+      </if>
+      <if test="record.commId != null" >
+        COMM_ID = #{record.commId,jdbcType=INTEGER},
+      </if>
+      <if test="record.poliId != null" >
+        POLI_ID = #{record.poliId,jdbcType=INTEGER},
+      </if>
+      <if test="record.builName != null" >
+        BUIL_NAME = #{record.builName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.builGpse != null" >
+        BUIL_GPSE = #{record.builGpse,jdbcType=VARCHAR},
+      </if>
+      <if test="record.builGpsn != null" >
+        BUIL_GPSN = #{record.builGpsn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.builType != null" >
+        BUIL_TYPE = #{record.builType,jdbcType=CHAR},
+      </if>
+      <if test="record.isDeleted != null" >
+        IS_DELETED = #{record.isDeleted,jdbcType=BIT},
+      </if>
+      <if test="record.ramark != null" >
+        RAMARK = #{record.ramark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.builAddr != null" >
+        BUIL_ADDR = #{record.builAddr,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update building
+    set BUIL_ID = #{record.builId,jdbcType=INTEGER},
+      COMM_ID = #{record.commId,jdbcType=INTEGER},
+      POLI_ID = #{record.poliId,jdbcType=INTEGER},
+      BUIL_NAME = #{record.builName,jdbcType=VARCHAR},
+      BUIL_GPSE = #{record.builGpse,jdbcType=VARCHAR},
+      BUIL_GPSN = #{record.builGpsn,jdbcType=VARCHAR},
+      BUIL_TYPE = #{record.builType,jdbcType=CHAR},
+      IS_DELETED = #{record.isDeleted,jdbcType=BIT},
+      RAMARK = #{record.ramark,jdbcType=VARCHAR},
+      BUIL_ADDR = #{record.builAddr,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="zhenghang.pojo.Building" >
+    update building
+    <set >
+      <if test="commId != null" >
+        COMM_ID = #{commId,jdbcType=INTEGER},
+      </if>
+      <if test="poliId != null" >
+        POLI_ID = #{poliId,jdbcType=INTEGER},
+      </if>
+      <if test="builName != null" >
+        BUIL_NAME = #{builName,jdbcType=VARCHAR},
+      </if>
+      <if test="builGpse != null" >
+        BUIL_GPSE = #{builGpse,jdbcType=VARCHAR},
+      </if>
+      <if test="builGpsn != null" >
+        BUIL_GPSN = #{builGpsn,jdbcType=VARCHAR},
+      </if>
+      <if test="builType != null" >
+        BUIL_TYPE = #{builType,jdbcType=CHAR},
+      </if>
+      <if test="isDeleted != null" >
+        IS_DELETED = #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="ramark != null" >
+        RAMARK = #{ramark,jdbcType=VARCHAR},
+      </if>
+      <if test="builAddr != null" >
+        BUIL_ADDR = #{builAddr,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where BUIL_ID = #{builId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="zhenghang.pojo.Building" >
+    update building
+    set COMM_ID = #{commId,jdbcType=INTEGER},
+      POLI_ID = #{poliId,jdbcType=INTEGER},
+      BUIL_NAME = #{builName,jdbcType=VARCHAR},
+      BUIL_GPSE = #{builGpse,jdbcType=VARCHAR},
+      BUIL_GPSN = #{builGpsn,jdbcType=VARCHAR},
+      BUIL_TYPE = #{builType,jdbcType=CHAR},
+      IS_DELETED = #{isDeleted,jdbcType=BIT},
+      RAMARK = #{ramark,jdbcType=VARCHAR},
+      BUIL_ADDR = #{builAddr,jdbcType=VARCHAR}
+    where BUIL_ID = #{builId,jdbcType=INTEGER}
+  </update>
+</mapper>

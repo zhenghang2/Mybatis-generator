@@ -1,0 +1,642 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mybatis.mapper.PoliceMapper">
+  <resultMap id="BaseResultMap" type="mybatis.po.Police">
+    <id column="POLI_ID" jdbcType="INTEGER" property="poliId" />
+    <result column="POLI_CODE" jdbcType="VARCHAR" property="poliCode" />
+    <result column="POLI_NAME" jdbcType="VARCHAR" property="poliName" />
+    <result column="POLI_PASS" jdbcType="VARCHAR" property="poliPass" />
+    <result column="POLI_ROLE" jdbcType="CHAR" property="poliRole" />
+    <result column="POLI_PHOTO" jdbcType="VARCHAR" property="poliPhoto" />
+    <result column="POLI_DISTRICT" jdbcType="VARCHAR" property="poliDistrict" />
+    <result column="TIME_LASTLOGIN" jdbcType="TIMESTAMP" property="timeLastlogin" />
+    <result column="IP_LASTLOGIN" jdbcType="VARCHAR" property="ipLastlogin" />
+    <result column="IS_DELETED" jdbcType="BIT" property="isDeleted" />
+    <result column="RAMARK" jdbcType="VARCHAR" property="ramark" />
+    <result column="STAT_ID" jdbcType="INTEGER" property="statId" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    POLI_ID, POLI_CODE, POLI_NAME, POLI_PASS, POLI_ROLE, POLI_PHOTO, POLI_DISTRICT, TIME_LASTLOGIN, 
+    IP_LASTLOGIN, IS_DELETED, RAMARK, STAT_ID
+  </sql>
+  <select id="selectByExample" parameterType="mybatis.po.PoliceExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from police
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from police
+    where POLI_ID = #{poliId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from police
+    where POLI_ID = #{poliId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="mybatis.po.PoliceExample">
+    delete from police
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="mybatis.po.Police">
+    insert into police (POLI_ID, POLI_CODE, POLI_NAME, 
+      POLI_PASS, POLI_ROLE, POLI_PHOTO, 
+      POLI_DISTRICT, TIME_LASTLOGIN, IP_LASTLOGIN, 
+      IS_DELETED, RAMARK, STAT_ID
+      )
+    values (#{poliId,jdbcType=INTEGER}, #{poliCode,jdbcType=VARCHAR}, #{poliName,jdbcType=VARCHAR}, 
+      #{poliPass,jdbcType=VARCHAR}, #{poliRole,jdbcType=CHAR}, #{poliPhoto,jdbcType=VARCHAR}, 
+      #{poliDistrict,jdbcType=VARCHAR}, #{timeLastlogin,jdbcType=TIMESTAMP}, #{ipLastlogin,jdbcType=VARCHAR}, 
+      #{isDeleted,jdbcType=BIT}, #{ramark,jdbcType=VARCHAR}, #{statId,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="mybatis.po.Police">
+    insert into police
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="poliId != null">
+        POLI_ID,
+      </if>
+      <if test="poliCode != null">
+        POLI_CODE,
+      </if>
+      <if test="poliName != null">
+        POLI_NAME,
+      </if>
+      <if test="poliPass != null">
+        POLI_PASS,
+      </if>
+      <if test="poliRole != null">
+        POLI_ROLE,
+      </if>
+      <if test="poliPhoto != null">
+        POLI_PHOTO,
+      </if>
+      <if test="poliDistrict != null">
+        POLI_DISTRICT,
+      </if>
+      <if test="timeLastlogin != null">
+        TIME_LASTLOGIN,
+      </if>
+      <if test="ipLastlogin != null">
+        IP_LASTLOGIN,
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED,
+      </if>
+      <if test="ramark != null">
+        RAMARK,
+      </if>
+      <if test="statId != null">
+        STAT_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="poliId != null">
+        #{poliId,jdbcType=INTEGER},
+      </if>
+      <if test="poliCode != null">
+        #{poliCode,jdbcType=VARCHAR},
+      </if>
+      <if test="poliName != null">
+        #{poliName,jdbcType=VARCHAR},
+      </if>
+      <if test="poliPass != null">
+        #{poliPass,jdbcType=VARCHAR},
+      </if>
+      <if test="poliRole != null">
+        #{poliRole,jdbcType=CHAR},
+      </if>
+      <if test="poliPhoto != null">
+        #{poliPhoto,jdbcType=VARCHAR},
+      </if>
+      <if test="poliDistrict != null">
+        #{poliDistrict,jdbcType=VARCHAR},
+      </if>
+      <if test="timeLastlogin != null">
+        #{timeLastlogin,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ipLastlogin != null">
+        #{ipLastlogin,jdbcType=VARCHAR},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="ramark != null">
+        #{ramark,jdbcType=VARCHAR},
+      </if>
+      <if test="statId != null">
+        #{statId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="mybatis.po.PoliceExample" resultType="java.lang.Integer">
+    select count(*) from police
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update police
+    <set>
+      <if test="record.poliId != null">
+        POLI_ID = #{record.poliId,jdbcType=INTEGER},
+      </if>
+      <if test="record.poliCode != null">
+        POLI_CODE = #{record.poliCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.poliName != null">
+        POLI_NAME = #{record.poliName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.poliPass != null">
+        POLI_PASS = #{record.poliPass,jdbcType=VARCHAR},
+      </if>
+      <if test="record.poliRole != null">
+        POLI_ROLE = #{record.poliRole,jdbcType=CHAR},
+      </if>
+      <if test="record.poliPhoto != null">
+        POLI_PHOTO = #{record.poliPhoto,jdbcType=VARCHAR},
+      </if>
+      <if test="record.poliDistrict != null">
+        POLI_DISTRICT = #{record.poliDistrict,jdbcType=VARCHAR},
+      </if>
+      <if test="record.timeLastlogin != null">
+        TIME_LASTLOGIN = #{record.timeLastlogin,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.ipLastlogin != null">
+        IP_LASTLOGIN = #{record.ipLastlogin,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isDeleted != null">
+        IS_DELETED = #{record.isDeleted,jdbcType=BIT},
+      </if>
+      <if test="record.ramark != null">
+        RAMARK = #{record.ramark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statId != null">
+        STAT_ID = #{record.statId,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update police
+    set POLI_ID = #{record.poliId,jdbcType=INTEGER},
+      POLI_CODE = #{record.poliCode,jdbcType=VARCHAR},
+      POLI_NAME = #{record.poliName,jdbcType=VARCHAR},
+      POLI_PASS = #{record.poliPass,jdbcType=VARCHAR},
+      POLI_ROLE = #{record.poliRole,jdbcType=CHAR},
+      POLI_PHOTO = #{record.poliPhoto,jdbcType=VARCHAR},
+      POLI_DISTRICT = #{record.poliDistrict,jdbcType=VARCHAR},
+      TIME_LASTLOGIN = #{record.timeLastlogin,jdbcType=TIMESTAMP},
+      IP_LASTLOGIN = #{record.ipLastlogin,jdbcType=VARCHAR},
+      IS_DELETED = #{record.isDeleted,jdbcType=BIT},
+      RAMARK = #{record.ramark,jdbcType=VARCHAR},
+      STAT_ID = #{record.statId,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="mybatis.po.Police">
+    update police
+    <set>
+      <if test="poliCode != null">
+        POLI_CODE = #{poliCode,jdbcType=VARCHAR},
+      </if>
+      <if test="poliName != null">
+        POLI_NAME = #{poliName,jdbcType=VARCHAR},
+      </if>
+      <if test="poliPass != null">
+        POLI_PASS = #{poliPass,jdbcType=VARCHAR},
+      </if>
+      <if test="poliRole != null">
+        POLI_ROLE = #{poliRole,jdbcType=CHAR},
+      </if>
+      <if test="poliPhoto != null">
+        POLI_PHOTO = #{poliPhoto,jdbcType=VARCHAR},
+      </if>
+      <if test="poliDistrict != null">
+        POLI_DISTRICT = #{poliDistrict,jdbcType=VARCHAR},
+      </if>
+      <if test="timeLastlogin != null">
+        TIME_LASTLOGIN = #{timeLastlogin,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ipLastlogin != null">
+        IP_LASTLOGIN = #{ipLastlogin,jdbcType=VARCHAR},
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED = #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="ramark != null">
+        RAMARK = #{ramark,jdbcType=VARCHAR},
+      </if>
+      <if test="statId != null">
+        STAT_ID = #{statId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where POLI_ID = #{poliId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="mybatis.po.Police">
+    update police
+    set POLI_CODE = #{poliCode,jdbcType=VARCHAR},
+      POLI_NAME = #{poliName,jdbcType=VARCHAR},
+      POLI_PASS = #{poliPass,jdbcType=VARCHAR},
+      POLI_ROLE = #{poliRole,jdbcType=CHAR},
+      POLI_PHOTO = #{poliPhoto,jdbcType=VARCHAR},
+      POLI_DISTRICT = #{poliDistrict,jdbcType=VARCHAR},
+      TIME_LASTLOGIN = #{timeLastlogin,jdbcType=TIMESTAMP},
+      IP_LASTLOGIN = #{ipLastlogin,jdbcType=VARCHAR},
+      IS_DELETED = #{isDeleted,jdbcType=BIT},
+      RAMARK = #{ramark,jdbcType=VARCHAR},
+      STAT_ID = #{statId,jdbcType=INTEGER}
+    where POLI_ID = #{poliId,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="mybatis.po.Police">
+    <id column="POLI_ID" jdbcType="INTEGER" property="poliId" />
+    <result column="POLI_CODE" jdbcType="VARCHAR" property="poliCode" />
+    <result column="POLI_NAME" jdbcType="VARCHAR" property="poliName" />
+    <result column="POLI_PASS" jdbcType="VARCHAR" property="poliPass" />
+    <result column="POLI_ROLE" jdbcType="CHAR" property="poliRole" />
+    <result column="POLI_PHOTO" jdbcType="VARCHAR" property="poliPhoto" />
+    <result column="POLI_DISTRICT" jdbcType="VARCHAR" property="poliDistrict" />
+    <result column="TIME_LASTLOGIN" jdbcType="TIMESTAMP" property="timeLastlogin" />
+    <result column="IP_LASTLOGIN" jdbcType="VARCHAR" property="ipLastlogin" />
+    <result column="IS_DELETED" jdbcType="BIT" property="isDeleted" />
+    <result column="RAMARK" jdbcType="VARCHAR" property="ramark" />
+    <result column="STAT_ID" jdbcType="INTEGER" property="statId" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    POLI_ID, POLI_CODE, POLI_NAME, POLI_PASS, POLI_ROLE, POLI_PHOTO, POLI_DISTRICT, TIME_LASTLOGIN, 
+    IP_LASTLOGIN, IS_DELETED, RAMARK, STAT_ID
+  </sql>
+  <select id="selectByExample" parameterType="mybatis.po.PoliceExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from police
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from police
+    where POLI_ID = #{poliId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from police
+    where POLI_ID = #{poliId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="mybatis.po.PoliceExample">
+    delete from police
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="mybatis.po.Police">
+    insert into police (POLI_ID, POLI_CODE, POLI_NAME, 
+      POLI_PASS, POLI_ROLE, POLI_PHOTO, 
+      POLI_DISTRICT, TIME_LASTLOGIN, IP_LASTLOGIN, 
+      IS_DELETED, RAMARK, STAT_ID
+      )
+    values (#{poliId,jdbcType=INTEGER}, #{poliCode,jdbcType=VARCHAR}, #{poliName,jdbcType=VARCHAR}, 
+      #{poliPass,jdbcType=VARCHAR}, #{poliRole,jdbcType=CHAR}, #{poliPhoto,jdbcType=VARCHAR}, 
+      #{poliDistrict,jdbcType=VARCHAR}, #{timeLastlogin,jdbcType=TIMESTAMP}, #{ipLastlogin,jdbcType=VARCHAR}, 
+      #{isDeleted,jdbcType=BIT}, #{ramark,jdbcType=VARCHAR}, #{statId,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="mybatis.po.Police">
+    insert into police
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="poliId != null">
+        POLI_ID,
+      </if>
+      <if test="poliCode != null">
+        POLI_CODE,
+      </if>
+      <if test="poliName != null">
+        POLI_NAME,
+      </if>
+      <if test="poliPass != null">
+        POLI_PASS,
+      </if>
+      <if test="poliRole != null">
+        POLI_ROLE,
+      </if>
+      <if test="poliPhoto != null">
+        POLI_PHOTO,
+      </if>
+      <if test="poliDistrict != null">
+        POLI_DISTRICT,
+      </if>
+      <if test="timeLastlogin != null">
+        TIME_LASTLOGIN,
+      </if>
+      <if test="ipLastlogin != null">
+        IP_LASTLOGIN,
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED,
+      </if>
+      <if test="ramark != null">
+        RAMARK,
+      </if>
+      <if test="statId != null">
+        STAT_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="poliId != null">
+        #{poliId,jdbcType=INTEGER},
+      </if>
+      <if test="poliCode != null">
+        #{poliCode,jdbcType=VARCHAR},
+      </if>
+      <if test="poliName != null">
+        #{poliName,jdbcType=VARCHAR},
+      </if>
+      <if test="poliPass != null">
+        #{poliPass,jdbcType=VARCHAR},
+      </if>
+      <if test="poliRole != null">
+        #{poliRole,jdbcType=CHAR},
+      </if>
+      <if test="poliPhoto != null">
+        #{poliPhoto,jdbcType=VARCHAR},
+      </if>
+      <if test="poliDistrict != null">
+        #{poliDistrict,jdbcType=VARCHAR},
+      </if>
+      <if test="timeLastlogin != null">
+        #{timeLastlogin,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ipLastlogin != null">
+        #{ipLastlogin,jdbcType=VARCHAR},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="ramark != null">
+        #{ramark,jdbcType=VARCHAR},
+      </if>
+      <if test="statId != null">
+        #{statId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="mybatis.po.PoliceExample" resultType="java.lang.Integer">
+    select count(*) from police
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update police
+    <set>
+      <if test="record.poliId != null">
+        POLI_ID = #{record.poliId,jdbcType=INTEGER},
+      </if>
+      <if test="record.poliCode != null">
+        POLI_CODE = #{record.poliCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.poliName != null">
+        POLI_NAME = #{record.poliName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.poliPass != null">
+        POLI_PASS = #{record.poliPass,jdbcType=VARCHAR},
+      </if>
+      <if test="record.poliRole != null">
+        POLI_ROLE = #{record.poliRole,jdbcType=CHAR},
+      </if>
+      <if test="record.poliPhoto != null">
+        POLI_PHOTO = #{record.poliPhoto,jdbcType=VARCHAR},
+      </if>
+      <if test="record.poliDistrict != null">
+        POLI_DISTRICT = #{record.poliDistrict,jdbcType=VARCHAR},
+      </if>
+      <if test="record.timeLastlogin != null">
+        TIME_LASTLOGIN = #{record.timeLastlogin,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.ipLastlogin != null">
+        IP_LASTLOGIN = #{record.ipLastlogin,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isDeleted != null">
+        IS_DELETED = #{record.isDeleted,jdbcType=BIT},
+      </if>
+      <if test="record.ramark != null">
+        RAMARK = #{record.ramark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statId != null">
+        STAT_ID = #{record.statId,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update police
+    set POLI_ID = #{record.poliId,jdbcType=INTEGER},
+      POLI_CODE = #{record.poliCode,jdbcType=VARCHAR},
+      POLI_NAME = #{record.poliName,jdbcType=VARCHAR},
+      POLI_PASS = #{record.poliPass,jdbcType=VARCHAR},
+      POLI_ROLE = #{record.poliRole,jdbcType=CHAR},
+      POLI_PHOTO = #{record.poliPhoto,jdbcType=VARCHAR},
+      POLI_DISTRICT = #{record.poliDistrict,jdbcType=VARCHAR},
+      TIME_LASTLOGIN = #{record.timeLastlogin,jdbcType=TIMESTAMP},
+      IP_LASTLOGIN = #{record.ipLastlogin,jdbcType=VARCHAR},
+      IS_DELETED = #{record.isDeleted,jdbcType=BIT},
+      RAMARK = #{record.ramark,jdbcType=VARCHAR},
+      STAT_ID = #{record.statId,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="mybatis.po.Police">
+    update police
+    <set>
+      <if test="poliCode != null">
+        POLI_CODE = #{poliCode,jdbcType=VARCHAR},
+      </if>
+      <if test="poliName != null">
+        POLI_NAME = #{poliName,jdbcType=VARCHAR},
+      </if>
+      <if test="poliPass != null">
+        POLI_PASS = #{poliPass,jdbcType=VARCHAR},
+      </if>
+      <if test="poliRole != null">
+        POLI_ROLE = #{poliRole,jdbcType=CHAR},
+      </if>
+      <if test="poliPhoto != null">
+        POLI_PHOTO = #{poliPhoto,jdbcType=VARCHAR},
+      </if>
+      <if test="poliDistrict != null">
+        POLI_DISTRICT = #{poliDistrict,jdbcType=VARCHAR},
+      </if>
+      <if test="timeLastlogin != null">
+        TIME_LASTLOGIN = #{timeLastlogin,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ipLastlogin != null">
+        IP_LASTLOGIN = #{ipLastlogin,jdbcType=VARCHAR},
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED = #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="ramark != null">
+        RAMARK = #{ramark,jdbcType=VARCHAR},
+      </if>
+      <if test="statId != null">
+        STAT_ID = #{statId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where POLI_ID = #{poliId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="mybatis.po.Police">
+    update police
+    set POLI_CODE = #{poliCode,jdbcType=VARCHAR},
+      POLI_NAME = #{poliName,jdbcType=VARCHAR},
+      POLI_PASS = #{poliPass,jdbcType=VARCHAR},
+      POLI_ROLE = #{poliRole,jdbcType=CHAR},
+      POLI_PHOTO = #{poliPhoto,jdbcType=VARCHAR},
+      POLI_DISTRICT = #{poliDistrict,jdbcType=VARCHAR},
+      TIME_LASTLOGIN = #{timeLastlogin,jdbcType=TIMESTAMP},
+      IP_LASTLOGIN = #{ipLastlogin,jdbcType=VARCHAR},
+      IS_DELETED = #{isDeleted,jdbcType=BIT},
+      RAMARK = #{ramark,jdbcType=VARCHAR},
+      STAT_ID = #{statId,jdbcType=INTEGER}
+    where POLI_ID = #{poliId,jdbcType=INTEGER}
+  </update>
+</mapper>
